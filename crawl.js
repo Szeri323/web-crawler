@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-export { normalizeURL, getURLsFromHTML };
+export { normalizeURL, getURLsFromHTML, crawlPage };
 
 const normalizeURL = (url) => {
     try {
@@ -48,4 +48,27 @@ const getURLsFromHTML = (htmlBody, baseURL) => {
     });
 
     return arr
+}
+
+async function crawlPage(baseURL) {
+    try {
+        const response = await fetch(baseURL)
+        console.log(response)
+        console.log(response.status)
+        if(response.status >= 400){
+            throw new Error(response.statusText)
+        }
+        console.log(response.headers.get("content-type"))
+        if(!response.headers.get("content-type").includes('text/html')){
+            throw new Error('Bad conent-type')
+        }
+        else {
+            const bodyText = await response.text(); // Read the response body as text
+            console.log(bodyText); // Print the body text
+        }
+    }
+    catch(error) {
+        console.log(error)
+        return
+    }
 }
