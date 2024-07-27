@@ -8,7 +8,7 @@ test('pass https://blog.boot.dev/path/ url to equal blog.boot.dev/path', () => {
 })
 
 test('pass HTML body to extract url', () => {
-    
+
     const bodyHTML = `
     <html>
         <body>
